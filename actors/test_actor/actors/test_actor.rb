@@ -17,7 +17,15 @@ class TestActor
   # TODO this works but produces garbage output when written to screen, maybe something to do with what AMQP is doing to EM, remember that AMQP is a binary protocol
   module TestActorEM
     def recieve_data(data)
-      puts data.inspect
+      puts "class:#{data.class} methods:#{data.methods} data:#{data.inspect}"
+      case data
+      when "a"
+        send_data("big_ol_a")
+      when "b"
+        send_data("big_ol_b")
+      else
+        send_data("")
+      end
     end
   end
     

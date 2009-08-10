@@ -1,0 +1,28 @@
+- Actor Notes
+  the actor include brings several methods with it. 
+  actor methods that should be exposed to other actors are done so with the expose class method which takes symbols of the methods that need
+  to be exposed. 
+  requests can be sent to other actors using the method request. request takes several arguments, (type, payload = '', opts = {}, &blk).
+    type refers to the exposed method that is being triggered on the recieving nanite, i suppose type was used because its a "type" of call?
+    payload is the data that is to be sent along to the method triggered (it seems possible to specify different encoding schemes for this data, default is standard ruby but a json one seems to exist)
+    opts are
+      @type             = type
+      @payload          = payload
+      @from             = opts[:from]
+      @token            = opts[:token]
+      @reply_to         = opts[:reply_to]
+      @selector         = opts[:selector]
+      @target           = opts[:target]
+      @persistent       = opts[:persistent]
+      @tags             = opts[:tags] || []
+      TODO update this with descriptions / definitions for all the options
+      :selector<Symbol>:: Method for selecting an actor.  Default is :least_loaded.
+        :least_loaded:: Pick the nanite which has the lowest load.
+        :all:: Send the ] to all nanites which respond to the service.
+        :random:: Randomly pick a nanite.
+        :rr: Select a nanite according to round robin ordering.
+      :target<String>:: Select a specific nanite via identity, rather than using
+        a selector.
+      :persistent<Boolean>:: Instructs the AMQP broker to save the message to persistent
+        storage so that it isnt lost when the broker is restarted.
+        Default is false unless the mapper was started with the --persistent flag.
